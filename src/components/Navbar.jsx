@@ -16,7 +16,7 @@ function Navbar() {
   const [screeWidth, setScreeWidth] = useState(window.innerWidth);
   const [menuOpen, setMenuOpen] = useState(false);
   const [activeList, setActiveList] = useState(1);
-  const { loading, error, data } = useQuery(getPlaylist);
+  const { data } = useQuery(getPlaylist);
   const colors = useSelector((state) => state.musicData.colors);
 
   const dispatch = useDispatch();
@@ -29,7 +29,6 @@ function Navbar() {
   const handlePlaylist = (e) => {
     let id = e.target.id;
     dispatch(setPlaylistId(id));
-    alert(activeList);
     setActiveList(id);
   };
 
@@ -41,8 +40,8 @@ function Navbar() {
   useEffect(() => {
     if (data) {
       dispatch(setPlaylist(data.getPlaylists));
-      console.log(data);
     }
+    // eslint-disable-next-line
   }, [data]);
   
   return (
@@ -61,7 +60,7 @@ function Navbar() {
                 key={list.id}
                 id={list.id}
                 onClick={handlePlaylist}
-                style={{ color: list.id === activeList && "whitesmoke" }}
+                style={{ color: list.id === Number(activeList) && "whitesmoke" }}
               >
                 {list.title}
               </li>

@@ -9,7 +9,6 @@ import { setAllMusic, setCurrentSong } from "../redux/slices/musicDataSlice";
 
 function MusicList() {
   const [screeWidth, setScreeWidth] = useState(window.innerWidth);
-  const [playlistTitle, setPlaylistTitle] = useState("");
   const [searchText, setSearchText] = useState("");
   const [allMusicData, setAllMusicData] = useState();
   const activeMusic = useSelector((state) => state.musicData.currentSong._id);
@@ -23,7 +22,7 @@ function MusicList() {
   const skeletonArr = new Array(7);
   skeletonArr.fill(0);
 
-  const { loading, error, data, refetch } = useQuery(getSonglist, {
+  const { loading, data, refetch } = useQuery(getSonglist, {
     variables: { playlistId },
   });
 
@@ -43,7 +42,7 @@ function MusicList() {
       return;
     }
 
-    if (searchText == "") {
+    if (text === "") {
       setAllMusicData(data.getSongs);
       return;
     }
@@ -51,8 +50,8 @@ function MusicList() {
     let temp = [];
     for (const obj of data.getSongs) {
       if (
-        obj.title.toLowerCase().includes(searchText) ||
-        obj.artist.toLowerCase().includes(searchText)
+        obj.title.toLowerCase().includes(text) ||
+        obj.artist.toLowerCase().includes(text)
       ) {
         temp.push(obj);
       }
@@ -66,8 +65,8 @@ function MusicList() {
   }, [data]);
 
   useEffect(() => {
-    console.log("plalist id is ", playlistId);
-    refetch({ playlistId: playlistId });
+    refetch({ playlistId: Number(playlistId) });
+    // eslint-disable-next-line
   }, [playlistId]);
 
   window.addEventListener("resize", () => {
