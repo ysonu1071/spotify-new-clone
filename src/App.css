@@ -1,0 +1,29 @@
+*{
+  margin: 0px;
+  padding: 0px;
+  box-sizing: border-box;
+}
+
+.App{
+  width: 100vw;
+  display: flex;
+  background-image: linear-gradient(to left, #141421, #1a1b29, #212131, #282839, #2f2f42);
+}
+
+.musicBody{
+  width: 100vw;
+  display: flex;
+  justify-content: space-around;
+}
+
+@media only screen and (max-width: 1130px) {
+  .App{
+    display: block;
+  }
+
+}
+@media only screen and (max-width: 800px) {
+  .App{
+    display: block;
+  }
+}

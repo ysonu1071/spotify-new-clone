@@ -1,0 +1,89 @@
+.navbar{
+    width: 22vw;
+    height: 100vh;
+    padding-left: 30px;
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    z-index: 2;
+}
+
+.logoContainer{
+    width: 100%;
+    height: 80px;
+}
+
+.logoContainer img{
+    width: 150px;
+    margin-top: -50px;
+}
+.navContainer{
+    z-index: 5;
+}
+.navContainer ul{
+    list-style-type: none;
+}
+
+.navContainer ul li{
+    font-size: 20px;
+    color: gray;
+    margin-top: 20px;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    cursor: pointer;
+}
+.navContainer ul li:hover{
+    color: whitesmoke;
+}
+.menuContainer{
+    display: none;
+}
+
+
+@media only screen and (max-width: 1130px) {
+    .navbar{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+        height: 100px;
+    }
+
+    .navContainer{
+        position: absolute;
+        width: 100vw;
+        height: 90vh;
+        background-color: #2F2F42;
+        top: 100px;
+        left: 0px;
+        display: flex;
+        justify-content: center;
+    }
+
+    .navContainer ul{
+        width: 300px;
+    }
+
+    .menuContainer{
+        display: block;
+        color: whitesmoke;
+        margin-right: 50px;
+        cursor: pointer;
+    }
+}
+
+@media only screen and (max-width: 425px) {
+    .navbar{
+        height: 60px;
+        padding-left: 20px;
+    }
+    
+    .logoContainer img{
+        width: 100px;
+        margin-top: -20px;
+    }
+    .navContainer{
+        top: 80px;
+    }
+    .menuContainer{
+        margin-right: 30px;
+    }
+}

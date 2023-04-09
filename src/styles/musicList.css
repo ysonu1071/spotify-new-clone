@@ -1,0 +1,165 @@
+.musicList {
+    height: 100vh;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    z-index: 1;
+}
+
+#musicList-title {
+    font-size: 35px;
+    color: whitesmoke;
+    font-weight: 700;
+    margin: 20px 0px;
+    padding-left: 20px;
+}
+
+.searchContainer {
+    width: 32vw;
+    display: flex;
+    align-items: center;
+    padding: 0px 5px;
+    background-color: #2d2d4188;
+    border-radius: 10px;
+    margin-left: 20px;
+}
+
+.searchContainer input {
+    width: 29vw;
+    padding: 10px;
+    font-size: 20px;
+    background-color: transparent;
+    border: none;
+    outline: none;
+    color: whitesmoke;
+}
+
+.searchContainer svg {
+    color: gray;
+    font-size: 35px;
+    cursor: pointer;
+}
+
+.musicList-container {
+    overflow-y: scroll;
+    height: 500px;
+    margin-top: 20px;
+}
+
+.musicList-container::-webkit-scrollbar {
+    display: none;
+}
+
+.music {
+    width: 35vw;
+    display: flex;
+    height: 100px;
+    padding: 0px 20px;
+    align-items: center;
+    justify-content: space-between;
+    color: whitesmoke;
+    margin-top: 5px;
+    border-radius: 10px;
+}
+
+.musicProfile-container {
+    display: flex;
+    gap: 20px;
+}
+
+.musicProfile-container img {
+    width: 60px;
+    height: 60px;
+    border-radius: 50px;
+}
+
+.musicName {
+    font-size: 18px;
+}
+
+.musicDuration {
+    font-size: 18px;
+}
+
+.music:hover {
+    background-color: #2d2d4188;
+}
+
+
+/* ....................skeleton css............. */
+.musiclist-skeleton {
+    margin-top: 100px;
+}
+
+.musicProfile-skeleton {
+    display: flex;
+    margin-top: 20px;
+    gap: 20px;
+}
+
+.musicProfile-skeleton div {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.notfound-message {
+    display: flex;
+    width: 80%;
+    height: 100px;
+    font-size: 18px;
+    background-color: #3c3c53;
+    color: whitesmoke;
+    margin-left: 30px;
+    border-radius: 10px;
+    align-items: center;
+    justify-content: center;
+    font-weight: 400;
+    padding: 10px;
+    margin-top: 50px;
+}
+
+@media only screen and (max-width: 1130px) {
+    .musicList {
+        width: 50vw;
+    }
+
+    .searchContainer {
+        width: 80%;
+    }
+
+    .searchContainer input {
+        width: 90%;
+    }
+
+    .music {
+        width: 90%;
+    }
+
+
+}
+
+@media only screen and (max-width: 800px) {
+    .musicList {
+        position: absolute;
+        width: 100vw;
+        height: auto;
+        top: 300px;
+        left: 0px;
+        background-color: #3c3c53;
+        padding-left: 5%;
+    }
+}
+
+@media only screen and (max-width: 425px) {
+
+    .musicList .musicName {
+        font-size: 18px;
+        width: 140px;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
+    }
+
+    .music {
+        width: 95%;
+    }
+}
