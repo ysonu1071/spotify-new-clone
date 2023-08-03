@@ -68,6 +68,34 @@
     cursor: pointer;
 }
 
+.favoriteIcon{
+        position: relative;
+        width: 45px;
+        height: 45px;
+        /* background-color: gray; */
+        border-radius: 50px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+}
+
+.favoriteIcon svg{
+    font-size: 30px;
+}
+.favoriteIconText{
+    display: none;
+    position: absolute;
+    width: 200px;
+    top: -20px;
+    left: -20px;
+}
+
+.favoriteIcon:hover{
+    .favoriteIconText{
+        display: block;
+    }
+}
 .fa-solid {
     cursor: pointer;
 }

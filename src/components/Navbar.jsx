@@ -11,6 +11,7 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import { useQuery } from "@apollo/client";
 import { getPlaylist } from "../gql/Query";
+import { setLoginPage } from "../redux/slices/authSlice";
 
 function Navbar() {
   const [screeWidth, setScreeWidth] = useState(window.innerWidth);
@@ -18,6 +19,7 @@ function Navbar() {
   const [activeList, setActiveList] = useState(1);
   const { data } = useQuery(getPlaylist);
   const colors = useSelector((state) => state.musicData.colors);
+  const auth = useSelector((state)=> state.auth);
 
   const dispatch = useDispatch();
 
@@ -28,8 +30,18 @@ function Navbar() {
 
   const handlePlaylist = (e) => {
     let id = e.target.id;
-    dispatch(setPlaylistId(id));
-    setActiveList(id);
+    if(id === "3" || id === "4"){
+      if(auth.loginStatus){
+        dispatch(setPlaylistId(id));
+        setActiveList(id);
+      }else{
+        dispatch(setLoginPage(true));
+      }
+    }else{
+      dispatch(setPlaylistId(id));
+      setActiveList(id);
+    }
+    
   };
 
   window.addEventListener("resize", () => {
@@ -55,7 +67,7 @@ function Navbar() {
           style={{ backgroundColor: `${colors[2]}` }}
         >
           <ul>
-            {data?.getPlaylists.map((list) => (
+            {/* {data?.getPlaylists.map((list) => (
               <li
                 key={list.id}
                 id={list.id}
@@ -64,7 +76,11 @@ function Navbar() {
               >
                 {list.title}
               </li>
-            ))}
+            ))} */}
+            <li id="1" onClick={handlePlaylist} key="1" style={{ color: 1 === Number(activeList) && "whitesmoke" }}>For you</li>
+            <li id="2" onClick={handlePlaylist} key="2" style={{ color: 2 === Number(activeList) && "whitesmoke" }}>Top tracks</li>
+            <li id="3" onClick={handlePlaylist} key="3" style={{ color: 3 === Number(activeList) && "whitesmoke" }}>Favorites</li>
+            <li id="4" onClick={handlePlaylist} key="4" style={{ color: 4 === Number(activeList) && "whitesmoke" }}>Recently played </li>
           </ul>
         </div>
       ) : null}

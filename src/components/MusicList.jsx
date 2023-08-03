@@ -10,7 +10,7 @@ import { setAllMusic, setCurrentSong } from "../redux/slices/musicDataSlice";
 function MusicList() {
   const [screeWidth, setScreeWidth] = useState(window.innerWidth);
   const [searchText, setSearchText] = useState("");
-  const [allMusicData, setAllMusicData] = useState();
+  const [allMusicData, setAllMusicData] = useState([]);
   const activeMusic = useSelector((state) => state.musicData.currentSong._id);
   const isMenuOpen = useSelector((state) => state.musicData.isMenuOpen);
   const playlistId = useSelector((state) => state.musicData.playlistId);
@@ -64,14 +64,29 @@ function MusicList() {
     setAllMusicData(data?.getSongs);
   }, [data]);
 
+
   useEffect(() => {
-    refetch({ playlistId: Number(playlistId) });
+    if(playlistId == "3"){
+      if(localStorage.getItem("favoriteSong")){
+        let tempAllMusic = JSON.parse(localStorage.getItem("favoriteSong"));
+        dispatch(setAllMusic(tempAllMusic));
+        setAllMusicData(tempAllMusic);
+      }
+    
+    }else if(playlistId == "4"){
+      if(localStorage.getItem("recentlyPlayed")){
+        let tempAllMusic = JSON.parse(localStorage.getItem("recentlyPlayed"));
+        dispatch(setAllMusic(tempAllMusic));
+        setAllMusicData(tempAllMusic);
+      }
+    }else{
+      refetch({ playlistId: Number(playlistId) });
+    }
     // eslint-disable-next-line
   }, [playlistId]);
 
   window.addEventListener("resize", () => {
     setScreeWidth(window.innerWidth);
-    console.log("inner  width is ", screeWidth);
   });
 
   return (
@@ -120,7 +135,7 @@ function MusicList() {
                   </div>
                 ))}
 
-                {!loading && !data && (
+                {!loading && (allMusicData?.length == 0) && (
                   <div className="notfound-message">
                     Music not found!, Refresh the page to get previous music.
                   </div>

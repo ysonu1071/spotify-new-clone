@@ -1,8 +1,10 @@
 import React, { useEffect, useRef, useState } from "react";
 import "../styles/musicPlayer.css";
 import { ColorExtractor } from "react-color-extractor";
-import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
+// import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import VolumeUpIcon from "@mui/icons-material/VolumeUp";
+import StarBorderIcon from '@mui/icons-material/StarBorder';
+import StarIcon from '@mui/icons-material/Star';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faPlay,
@@ -18,6 +20,9 @@ function MusicPlayer() {
   const [showVolume, setShowVolume] = useState(false);
   const [volumeValue, setVolumeValue] = useState(50);
   const [myProgressBar, setMyProgressBar] = useState(0);
+  const [isFavorite, setIsFavorite] = useState(false);
+  const [allFavoriteSong, setAllFevoriteSong] = useState([]);
+
 
   let currentSong = useSelector((state) => state.musicData.currentSong);
   let allSong = useSelector((state) => state.musicData.allMusic);
@@ -26,6 +31,50 @@ function MusicPlayer() {
 
   let audioElRef = useRef();
 
+  const handleRecentlyPlayed = (currentSong) => {
+    if(localStorage.getItem("recentlyPlayed")){
+      let arr = JSON.parse(localStorage.getItem("recentlyPlayed"));
+      console.log("player: ", arr);
+      arr.push(currentSong);
+      localStorage.setItem("recentlyPlayed", JSON.stringify(arr));
+    }else{
+      let arr = [currentSong];
+      localStorage.setItem("recentlyPlayed", JSON.stringify(arr));
+    }
+  }
+
+  const addToFavorite = () => {
+    if(localStorage.getItem("favoriteSong")){
+      let favoriteSong = JSON.parse(localStorage.getItem("favoriteSong"));
+      let obj = currentSong;
+      favoriteSong.push(obj);
+      localStorage.setItem("favoriteSong", JSON.stringify(favoriteSong));
+    }else{
+      let obj= currentSong;
+      let favoriteSong = [];
+      favoriteSong.push(obj);
+      localStorage.setItem("favoriteSong", JSON.stringify(favoriteSong));
+    }
+
+    if(localStorage.getItem("favoriteSong")){
+      let arr = JSON.parse(localStorage.getItem("favoriteSong"));
+      setAllFevoriteSong(arr);
+    }
+
+    handleFavoriteStatus();
+
+  }
+
+  const deleteFromFavorite = () => {
+    let id = currentSong._id;
+    let arr = allFavoriteSong.filter((song)=> song._id !== id);
+    setAllFevoriteSong(arr);
+    setIsFavorite(false);
+
+    let allData = JSON.parse(localStorage.getItem("favoriteSong"));
+    arr = allData.filter((song)=> song._id !== id);
+    localStorage.setItem("favoriteSong", JSON.stringify(arr));
+  }
   const updateProgressBar = () => {
     audioElRef.current.addEventListener("timeupdate", () => {
       let progress = parseInt(
@@ -48,6 +97,7 @@ function MusicPlayer() {
       audioElRef.current.play();
       console.log(audioElRef.current.currentTime);
       updateProgressBar();
+      handleRecentlyPlayed(currentSong);
     } else {
       audioElRef.current.pause();
       console.log(audioElRef.current.currentTime);
@@ -91,6 +141,22 @@ function MusicPlayer() {
     dispatch(setColors(colors));
   };
 
+  const handleFavoriteStatus = () => {
+    console.log("its working..")
+    let id = currentSong._id;
+    let flag = false;
+    for(let song of allFavoriteSong){
+      if(song._id === id){
+        flag = true;
+      }
+    }
+
+    if(flag){
+      setIsFavorite(true);
+    }else{
+      setIsFavorite(false);
+    }
+  }
   useEffect(() => {
     if (currentSong) {
       audioElRef.current.pause();
@@ -99,8 +165,17 @@ function MusicPlayer() {
       if (isPlaying) {
         audioElRef.current.play();
         updateProgressBar();
+        handleRecentlyPlayed(currentSong);
       }
     }
+
+    if(localStorage.getItem("favoriteSong")){
+      let arr = JSON.parse(localStorage.getItem("favoriteSong"));
+      setAllFevoriteSong(arr);
+    }
+    console.log("all fev song is: ", allFavoriteSong);
+    handleFavoriteStatus();
+
   }, [currentSong]);
 
   return (
@@ -120,9 +195,14 @@ function MusicPlayer() {
         onChange={handleProgressBar}
       />
       <div className="musicController">
-        <div className="moreIcon">
-          <MoreHorizIcon />
-        </div>
+        {!isFavorite ? <div className="favoriteIcon">
+          <p className="favoriteIconText">Add to Favorite</p>
+          <StarBorderIcon onClick={addToFavorite}/>
+        </div>:
+        <div className="favoriteIcon">
+          <p className="favoriteIconText">Remove from Favorite</p>
+          <StarIcon onClick={deleteFromFavorite}/>
+        </div>}
         <div className="mainController">
           <FontAwesomeIcon
             icon={faBackward}

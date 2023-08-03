@@ -16,6 +16,29 @@
   justify-content: space-around;
 }
 
+.login-btn-container{
+  position: absolute;
+  right: 100px;
+  top: 30px;
+}
+
+.login-btn-container button{
+  padding: 5px 10px;
+  border-radius: 10px;
+  border: none;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.login-page-container{
+  position: absolute;
+  z-index: 5;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgb(173, 216, 230);
+}
+
 @media only screen and (max-width: 1130px) {
   .App{
     display: block;

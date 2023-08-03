@@ -11,6 +11,8 @@ const musicDataSlice = createSlice({
       url: "https://storage.googleapis.com/similar_sentences/Imagine%20Dragons%20-%20West%20Coast%20(Pendona.com).mp3",
       photo: "https://i.scdn.co/image/ab67616d0000b273f864bcdcc245f06831d17ae0",
       artist: "Coldplay",
+      duration: 290,
+      __typename: "Song"
     },
     allMusic: [],
     playlist: [],
